@@ -1,4 +1,5 @@
 const canvas = document.getElementById('canvas');
+sizeCanvas(); // Ensure canvas is sized for device pixel ratio before getting context
 const ctx = canvas.getContext('2d');
 const cellSize = 30;
 const maxSize = 30;
@@ -17,9 +18,9 @@ function drawThing(thing) {
 }
 
 function loop() {
-  ctx.clearRect(0, 0, innerWidth, innerHeight);
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
   things.forEach(thing => {
-    const dist = vec2.dist(mousePos, thing.pos);
+    const dist = vec2.distance(mousePos, thing.pos);
     thing.radius = clamp(dist * dist * 0.0003 - 1, 0, maxSize);
     drawThing(thing);
   });
@@ -50,7 +51,10 @@ function sizeCanvas() {
   const canvasRect = canvas.getBoundingClientRect();
   canvas.width = canvasRect.width * dpr;
   canvas.height = canvasRect.height * dpr;
-  ctx.scale(dpr, dpr);
+  if (typeof ctx !== 'undefined') {
+    ctx.setTransform(1, 0, 0, 1, 0, 0); // Reset transform before scaling
+    ctx.scale(dpr, dpr);
+  }
 }
 
 function handleResize() {
@@ -59,13 +63,17 @@ function handleResize() {
   numThingsY = Math.ceil(innerHeight / cellSize);
   makeThings();
 }
+// Register event listeners after all functions and variables are defined
 window.addEventListener('resize', throttled(handleResize));
 
 function handleMouseMove(event) {
   vec2.set(mousePos, event.clientX, event.clientY);
   loop();
 }
+
 window.addEventListener('mousemove', throttled(handleMouseMove));
+const throttledHandleMouseMove = throttled(handleMouseMove);
+window.addEventListener('mousemove', throttledHandleMouseMove);
 
 // Kick it off
 handleResize();
@@ -74,16 +82,20 @@ loop();
 // USEFUL FUNCTIONS ----------
 function throttled(fn) {
   let didRequest = false;
-  return param => {
+  let lastArgs;
+  return (...args) => {
+    lastArgs = args;
     if (!didRequest) {
       window.requestAnimationFrame(() => {
-        fn(param);
+        fn(...lastArgs);
         didRequest = false;
       });
       didRequest = true;
     }
   };
 }
+
+// Clamp function to restrict a value between min and max
 function clamp(value, min = 0, max = 1) {
-  return value <= min ? min : value >= max ? max : value;
+  return Math.min(Math.max(value, min), max);
 }

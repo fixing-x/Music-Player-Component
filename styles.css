@@ -26,9 +26,9 @@ body {
     align-items: center;
     height: 100vh;
     flex-direction: column;
-    /* background: url(https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1080) no-repeat;
-            background-size: cover;
-            background-position: center center; */
+    background: url(/nordwood-themes-R53t-Tg6J4c-unsplash.jpg) no-repeat; 
+    background-size: cover;
+    background-position: center center;
 }
 
 h1 {
@@ -38,11 +38,12 @@ h1 {
     font-weight: 700;
     text-align: justify;
     /* text border stroke outside; */
-    -webkit-text-stroke: 3px #00000032;
-    color: #fff;
-    paint-order: stroke fill;
+    /* -webkit-text-stroke: 3px #00000032; */
+    color: #000000;
+    /* paint-order: stroke fill; */
     text-align: center;
-    /* line-height: .8; */
+    line-height: .8;
+    mix-blend-mode: overlay;
 }
 
 #songCard {
