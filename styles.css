@@ -1,0 +1,228 @@
+* {
+    box-sizing: border-box;
+    color: #010203;
+}
+
+:root {
+    --fg: #ff4000;
+    --bg: #000057;
+}
+
+#canvas {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+}
+
+body {
+    font-family: 'inter', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+    /* background: url(https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&q=80&w=1080) no-repeat;
+            background-size: cover;
+            background-position: center center; */
+}
+
+h1 {
+    position: absolute;
+    z-index: -1;
+    font-size: 20vw;
+    font-weight: 700;
+    text-align: justify;
+    /* text border stroke outside; */
+    -webkit-text-stroke: 3px #00000032;
+    color: #fff;
+    paint-order: stroke fill;
+    text-align: center;
+    /* line-height: .8; */
+}
+
+#songCard {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    width: 280px;
+    border: 2px solid transparent;
+    background-color: #f6f7f9;
+    /* border-image-slice: 6; */
+    border-radius: 12px;
+    border: 1px solid #0000001e;
+    padding: 12px;
+    backdrop-filter: blur(4px);
+    transition: box-shadow 0.3s cubic-bezier(0.5,0,0,1);
+    box-shadow: 0px 0px 26px 0px rgba(0, 0, 0, 0.1);
+    &:hover {
+        box-shadow: 8px 9px 26px 0px rgba(0, 0, 0, 0.1),
+            31px 35px 47px 0px rgba(0, 0, 0, 0.09),
+            70px 79px 63px 0px rgba(0, 0, 0, 0.05);
+    }
+
+}
+
+.player {
+    display: flex;
+    align-items: center;
+    /* gap: 32px; */
+    width: 100%;
+}
+
+.player img {
+    width: 48px;
+    height: 48px;
+    border-radius: 4px;
+}
+
+#songDetails {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    align-items: center;
+    overflow: hidden;
+}
+
+#songTitle {
+    font-weight: 500;
+    font-size: 1rem;
+    /* color: #ffffff; */
+}
+
+#songArtist {
+    font-size: 0.7em;
+    color: #aaa;
+}
+
+#player-controls {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+    /* background-color: #333; */
+    /* color: #000000; */
+}
+
+#playButton {
+    display: flex;
+    align-items: center;
+    background: #17171a;
+    color: #f8f8f8;
+    cursor: pointer;
+    font-size: 1em;
+    padding: 8px;
+    /* gap: 4px; */
+    border-radius: 50px;
+    border: 1px solid #444;
+    font: .8em sans-serif;
+    position: relative;
+    overflow: hidden;
+    /* min-width: 36px; */
+    justify-content: flex-end;
+
+    &:hover {
+        background: #2a2a2e;
+        border: 1px solid #1e5371 inset;
+        box-shadow: 0 0 0 1px #666;
+    }
+
+    &:active {
+        background: #1e5371;
+        border: 1px solid #1e5371 inset;
+        box-shadow: 0 0 0 1px #666 inset;
+        transform: scale(.95);
+    }
+}
+
+#playText {
+    position: absolute;
+    left: 8px;
+    transform: translateX(-100%);
+    opacity: 0;
+    pointer-events: none;
+    margin: 0;
+    white-space: nowrap;
+    color: #fff;
+}
+
+#details {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    justify-items: space-around;
+}
+
+/* Video Element Styling */
+#video {
+    width: 100%;
+    height: 0px;
+    display: none;
+    /* position: absolute; */
+    border-radius: 4px;
+    overflow: hidden;
+    object-fit: cover;
+    object-position: center center;
+}
+
+#pauseIcon {
+    display: block;
+    position: absolute;
+    transform: scale(0);
+    opacity: 0;
+}
+
+#playIcon {
+    display: block;
+}
+
+/* seekbar styling */
+.seekbar {
+    display: none;
+    width: 100%;
+    /* margin: 8px 0; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.seekbar input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 4px;
+    background: #eee;
+    border-radius: 2px;
+    outline: none;
+}
+
+.seekbar input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background: #333;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.seekbar input[type="range"]::-moz-range-thumb {
+    width: 12px;
+    height: 12px;
+    background: #333;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.seekbar input[type="range"]::-webkit-slider-thumb:hover {
+    background: #370101;
+}
+
+.seekbar input[type="range"]::-moz-range-thumb:hover {
+    background: #370101;
+}

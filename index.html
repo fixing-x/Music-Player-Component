@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1, initial-scale=1.0">
+    <title>Document</title>
+    <!-- import Inter from Google Fonts all weights -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css" />
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/motion@latest/+esm"></script>
+</head>
+
+<body>
+<canvas id="canvas"></canvas>
+    <h1 id="Component Title">Music Player </h1>
+
+    <songCard id="songCard">
+        <video id="video" loop>
+            <track kind="metadata" src="" id="track">
+            </track>
+            <source src="/Sugar.mp4" type="video/mp4">
+        </video>
+
+    <!-- seekbar with matching ui style -->
+    <!-- <div class="seekbar">
+        <input type="range" id="seekBar" value="0" min="0" max="100" step="1">
+    </div> -->
+
+        <div class="player">
+            <!-- Song Album Art with placeholder image -->
+            <div id="songDetails">
+                <img id="albumArt"
+                    src="https://c.saavncdn.com/503/Will-Be-Loved-EP-English-2025-20250206053559-500x500.jpg"
+                    alt="Album Art">
+                <!-- Song Details -->
+                <div id="details">
+                    <div id="songTitle">Sugar</div>
+                    <div id="songArtist">Maroon 5</div>
+                </div>
+            </div>
+            <div id="player-controls">
+                <!-- Player controls can be added here -->
+                <button id="playButton">
+                    <p id="playText" style="margin: 0px;color: #fff;">Play</p>
+                    <!-- Add Phosphor Play Icon -->
+                    <i id="playIcon" class="ph-fill ph-play" style="color: #ffffff"></i>
+                    <i id="pauseIcon" class="ph-fill ph-pause" style="color: #ffffff"></i>
+                </button>
+            </div>
+        </div>
+    </songCard>
+    <script type="module">
+        import { animate, scroll } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
+        const card = document.getElementById("songCard")
+
+        if (btn) {
+            btn.style.transition = "transform 200ms ease-out";
+
+            btn.addEventListener("mouseenter", () => {
+                animate(btn, {
+                    width: "70px",
+                    backgroundColor: "#2a2a2e"
+                }, {
+                    duration: 0.2,
+                    easing: [.23, 1, .32, 1]
+                });
+
+                animate(playText, {
+                    translateX: "0%",
+                    opacity: 1
+                }, {
+                    duration: 0.15,
+                    delay: 0.05,
+                    easing: [.23, 1, .32, 1]
+                });
+            });
+
+            btn.addEventListener("mouseleave", () => {
+                animate(btn, {
+                    width: "30px",
+                    backgroundColor: "#17171a"
+                }, {
+                    duration: 0.2,
+                    easing: [.23, 1, .32, 1]
+                });
+
+                animate(playText, {
+                    translateX: "-100%",
+                    opacity: 0
+                }, {
+                    duration: 0.15,
+                    easing: [.23, 1, .32, 1]
+                });
+            });
+
+            function togglePlayPauseIcons(isPlaying, playIcon, pauseIcon) {
+                const albumArt = document.getElementById("albumArt");
+                const details = document.getElementById("details");
+                var time = 0.25;
+                var ease = [0.5, 0, 0, 1];
+                const sequence = [
+                    [albumArt, { x: -50, width: 0 }, { duration: time, easing: ease }],
+                    [video, { height: "254px", display: "block", y: 0 }, { duration: time, easing: ease, at: 0 }],
+                    [playIcon, {opacity: 0,scale: 0}, {duration: 0.1}],
+                    [pauseIcon, {opacity: 1, scale: 1}, {duration: 0.1}],
+                    [details, {x: -8}, {duration: 0.1, at: 0}]
+                ];
+
+                const reverseSequence = [
+                    [video, { height: "0px", display: "none", y: 10 }, { duration: time, easing: ease }],
+                    [albumArt, { x: 0, width: "48px", display: "block" }, { duration: time, easing: ease, at: 0 }],
+                    [playIcon, {opacity: 1,scale: 1}, {duration: 0.1}],
+                    [pauseIcon, {opacity: 0, scale: 0}, {duration: 0.1}],
+                    [details, {x: 0}, {duration: 0.1, at: 0}]
+                ];
+                if (isPlaying) {
+                    animate(sequence);
+                    playText.textContent = "Pause";
+                    
+                } else {
+                    playText.textContent = "Play";
+                    animate(reverseSequence);
+                }
+            }
+
+            btn.addEventListener("click", () => {
+                const isPlaying = !btn.classList.contains("playing");
+                btn.classList.toggle("playing", isPlaying); // Toggle 'playing' class 
+                const playIcon = document.getElementById("playIcon");
+                const pauseIcon = document.getElementById("pauseIcon");
+                togglePlayPauseIcons(isPlaying, playIcon, pauseIcon);
+            });
+        }
+
+
+    </script>
+    <script src="script.js"></script>
+    <script src="bg.js"></script>
+</body>
+
+</html>
